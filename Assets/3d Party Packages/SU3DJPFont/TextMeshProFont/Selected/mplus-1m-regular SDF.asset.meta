@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 984bc697a12925f468a54076cca5a2c7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 337
+  packageName: Selected U3D Japanese Font
+  packageVersion: 3.1.0
+  assetPath: Assets/SU3DJPFont/TextMeshProFont/Selected/mplus-1m-regular SDF.asset
+  uploadId: 566934

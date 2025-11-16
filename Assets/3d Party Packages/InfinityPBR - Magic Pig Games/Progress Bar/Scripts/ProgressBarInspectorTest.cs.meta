@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c04f10ba73bec438c893017820bc06f8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268457
+  packageName: Progress Bars - Customizable and Extensible (Health Bars etc)
+  packageVersion: 1.0
+  assetPath: Assets/InfinityPBR - Magic Pig Games/Progress Bar/Scripts/ProgressBarInspectorTest.cs
+  uploadId: 621493

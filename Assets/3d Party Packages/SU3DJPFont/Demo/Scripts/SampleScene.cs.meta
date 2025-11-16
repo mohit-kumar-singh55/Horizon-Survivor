@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cd1d75b76d458d6469464ce9bb5156cb
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 337
+  packageName: Selected U3D Japanese Font
+  packageVersion: 3.1.0
+  assetPath: Assets/SU3DJPFont/Demo/Scripts/SampleScene.cs
+  uploadId: 566934

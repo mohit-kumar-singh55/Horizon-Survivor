@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 5f3edff6d7c989d42855196f819dd804
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 50
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: M+ 1c
+  fontNames:
+  - M+ 1c
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4c387066fd2bd6047a0508c3d7ea86b6, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 337
+  packageName: Selected U3D Japanese Font
+  packageVersion: 3.1.0
+  assetPath: Assets/SU3DJPFont/Fonts/MPlusTestflight63a/mplus-1c-thin.ttf
+  uploadId: 566934

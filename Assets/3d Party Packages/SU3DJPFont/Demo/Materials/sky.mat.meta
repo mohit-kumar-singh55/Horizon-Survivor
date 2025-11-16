@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e7988269cb722cf4c978f5e2b7346c7b
+timeCreated: 1452327519
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 337
+  packageName: Selected U3D Japanese Font
+  packageVersion: 3.1.0
+  assetPath: Assets/SU3DJPFont/Demo/Materials/sky.mat
+  uploadId: 566934

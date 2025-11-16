@@ -1,0 +1,91 @@
+# === Unity Generated Folders ===
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+# [Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+Recordings/
+
+# === Crash and Debug Files ===
+sysinfo.txt
+*.stacktrace
+*.log
+
+# === Unity Addressables & StreamingAssets Cache ===
+Assets/AddressableAssetsData/*/*.bin*
+Assets/StreamingAssets/aa.meta
+Assets/StreamingAssets/aa/
+
+# === Ignore secret or environment files ===
+*.env
+*.env.local
+*.secret
+
+# === VS / Rider / JetBrains IDE ===
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.sln
+*.csproj
+*.unityproj
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.pdb.meta
+*.mdb
+*.mdb.meta
+*.opendb
+*.VC.db
+*.vscode
+
+# JetBrains Rider plugin
+Assets/Plugins/Editor/JetBrains*
+
+# === MonoDevelop / Consulo ===
+ExportedObj/
+.consulo/
+
+# === Unity Meta Files for Ignored Assets ===
+*.pidb.meta
+
+# === Android / iOS / Platform-specific Artifacts ===
+.gradle/
+*.apk
+*.aab
+*.app
+*.xcworkspace/
+*.xcuserdata/
+*.xcodeproj/
+Pods/
+DerivedData/
+
+# === Unity Asset Store Tools (optional) ===
+# /Assets/AssetStoreTools*
+
+# === OS Specific ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# === Editor Config / Tools Cache ===
+*.tmp
+*.bak
+*.old
+*.orig
+*.swp
+
+# === Unity Packages ===
+*.unitypackage
+*.unitypackage.meta
+
+# === Auto-generated folders by external tools ===
+obj/
+bin/
