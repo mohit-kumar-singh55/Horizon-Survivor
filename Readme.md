@@ -1,7 +1,5 @@
 # 🌅 Horizon Survivor
 
-<video src="/Assets/Video/Main Menu Video.mp4" controls></video>
-
 **Unity バージョン:6000.0.032f1**
 
 ---
