@@ -44,6 +44,10 @@ Assets/StreamingAssets/aa/
 *.VC.db
 *.vscode
 
+# Plastic SCM
+.plastic/
+.ignore
+
 # JetBrains Rider plugin
 Assets/Plugins/Editor/JetBrains*
 
