@@ -43,7 +43,7 @@ public class SunController : MonoBehaviour
         {
             hasTriggerdWin = true;
             OnSunSet?.Invoke();     // events to be triggered when win (勝利時にトリガーされるイベント)
-            Debug.Log("WIN!");
+            // Debug.Log("WIN!");
         }
     }
 }

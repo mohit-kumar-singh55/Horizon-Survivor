@@ -9,7 +9,7 @@ public class PlayerColliderController : MonoBehaviour
         if (other.CompareTag(itemTag))
         {
             other.gameObject.GetComponent<ItemCollector>().Init();
-            Debug.Log("Item picked up");
+            // Debug.Log("Item picked up");
         }
     }
 

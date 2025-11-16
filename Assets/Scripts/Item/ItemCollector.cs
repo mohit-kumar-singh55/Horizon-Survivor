@@ -19,14 +19,14 @@ public class ItemCollector : MonoBehaviour
             bool can_destroy = PlayerSystem.Instance.IncreaseHealth(lifeToIncrease);
             if (can_destroy) Destroy(gameObject);
 
-            Debug.Log("Life Increased by " + lifeToIncrease + "%");
+            // Debug.Log("Life Increased by " + lifeToIncrease + "%");
         }
         else
         {
             bool can_destroy = PlayerSystem.Instance.AddBoost();
             if (can_destroy) Destroy(gameObject);
 
-            Debug.Log("Boost Added");
+            // Debug.Log("Boost Added");
         }
     }
 }

@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         Vector3 targetVelocity = move * (isBoosting ? boostSpeed : (isSprinting ? sprintSpeed : speed));        // priority boost > sprint > walk
         Vector3 velocityChange = targetVelocity - rb.linearVelocity;
 
-        rb.AddForce(velocityChange * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(velocityChange * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 
     void HandleJump()
