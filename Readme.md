@@ -2,6 +2,8 @@
 
 **Unity バージョン:6000.0.032f1**
 
+<img src="./Assets/Art/UI/readme_banner.png" alt="Banner Image">
+
 ---
 
 ## 🕹 ゲーム概要
