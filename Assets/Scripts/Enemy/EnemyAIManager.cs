@@ -1,38 +1,41 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// 敵の AI を制御するクラス
+/// </summary>
 [RequireComponent(typeof(EnemyController), typeof(EnemyPatrol))]
 public class EnemyAIManager : MonoBehaviour
 {
-    private EnemyController enemy;
-    private EnemyPatrol patrol;
-    private Animator animator;
-    private NavMeshAgent agent;
+    private EnemyController _enemy;
+    private EnemyPatrol _patrol;
+    private Animator _animator;
+    private NavMeshAgent _agent;
 
     const string ANIM_WALKING_SPEED = "speed";
 
     private void Awake()
     {
-        enemy = GetComponent<EnemyController>();
-        patrol = GetComponent<EnemyPatrol>();
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
+        _enemy = GetComponent<EnemyController>();
+        _patrol = GetComponent<EnemyPatrol>();
+        _animator = GetComponent<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
-        animator.SetFloat(ANIM_WALKING_SPEED, agent.velocity.magnitude);
+        _animator.SetFloat(ANIM_WALKING_SPEED, _agent.velocity.magnitude);
 
-        switch (enemy.CurrentState)
+        switch (_enemy.CurrentState)
         {
             case EnemyState.Idle:
-                patrol.enabled = false;
+                _patrol.enabled = false;
                 break;
             case EnemyState.Patrol:
-                patrol.enabled = true;
+                _patrol.enabled = true;
                 break;
             case EnemyState.Chasing:
-                patrol.enabled = false;
+                _patrol.enabled = false;
                 break;
         }
     }

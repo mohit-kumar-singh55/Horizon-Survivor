@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-// ** Script for controlling player power and death condition **
+/// <summary>
+/// プレイヤーの力と死亡条件を制御するスクリプト
+/// </summary>
 public class PlayerSystem : MonoBehaviour
 {
     public static PlayerSystem Instance { get; private set; }
 
+    #region Serialize Fields
     [Tooltip("Number of kicks to die (player will die no matter what's the health)")] // 死亡するまでのキックの数（プレイヤーは健康状態に関係なく死亡します）
     [SerializeField][Range(1, 5)] int kicksToDie = 3;
     [SerializeField][Range(0f, 100f)] float maxHealth = 100f;
@@ -17,19 +21,21 @@ public class PlayerSystem : MonoBehaviour
     [SerializeField] float timeToTakeDamage = 10f;
     [Tooltip("Maximum number of boosts player can equip at once")]  // プレイヤーが同時に装備可能なブーストの最大数
     [SerializeField][Range(0, 5)] int MaxNumberOfBoosts = 3;
+    #endregion
 
-    private GameManager gameManager;
-    private UIManager uiManager;
+    #region Private Fields
+    private GameManager _gameManager;
+    private UIManager _uiManager;
 
-    private int currentKicks;
-    private float currentHealth;
-    private int availableBoosts;
-    private bool gameover = false;
+    private int _currentKicks;
+    private float _currentHealth;
+    private int _availableBoosts;
+    private bool _gameover = false;
+    #endregion
 
-    public delegate void PlayerDeathSequence();
-    public static event PlayerDeathSequence OnPlayerDeathSequence;
+    public static event Action OnPlayerDeathSequence = delegate { };
 
-    public int AvailableBoosts => availableBoosts;
+    public int AvailableBoosts => _availableBoosts;
 
     void Awake()
     {
@@ -45,105 +51,107 @@ public class PlayerSystem : MonoBehaviour
 
     void Start()
     {
-        gameManager = GameManager.Instance;
-        uiManager = UIManager.Instance;
+        // initialize
+        _gameManager = GameManager.Instance;
+        _uiManager = UIManager.Instance;
 
-        currentHealth = maxHealth;
-        currentKicks = 0;
+        _currentHealth = maxHealth;
+        _currentKicks = 0;
 
-        availableBoosts = 0;
-        uiManager.UpdateBoostUI(availableBoosts);
+        _availableBoosts = 0;
+        _uiManager.UpdateBoostUI(_availableBoosts);
 
-        // ** overriding kicksToDie as per difficulty (難易度に応じてキックの数を上書き) **
+        // ** 難易度に応じてキックの数を上書き **
         DifficultySettings settings = DifficultyManager.Instance?.CurrentSettings;
         kicksToDie = settings.kicksToDie;
 
-        // ** taking damage after time (固定時間後にダメージを受ける) **
+        // ** 固定時間後にダメージを受ける **
         StartCoroutine(TakeDamageWithTime());
     }
 
     void Update()
     {
-        if (!gameover) PlayerDeathCondition();
+        if (!_gameover) PlayerDeathCondition();
     }
 
     void PlayerDeathCondition()
     {
-        // death by kick (キックによる死)
-        if (currentKicks >= kicksToDie)
+        // キックによる死
+        if (_currentKicks >= kicksToDie)
         {
             StartCoroutine(OnDeathByKick());
-            gameover = true;
+            _gameover = true;
         }
-        // death by health that is based on time (時間に基づく健康の低下による死)
-        else if (currentHealth <= 0)
+        // 時間に基づく健康の低下による死
+        else if (_currentHealth <= 0)
         {
-            gameManager.TriggerLose(); // Trigger lose
+            _gameManager.TriggerLose(); // Trigger lose
             OnPlayerDeathSequence?.Invoke();
 
-            gameover = true;
+            _gameover = true;
         }
     }
 
+    // アイテムを受け取れば健康を回復
     public bool IncreaseHealth(float healthToIncrease)
     {
-        if (currentHealth >= maxHealth) return false;
+        if (_currentHealth >= maxHealth) return false;
 
-        currentHealth += healthToIncrease;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        _currentHealth += healthToIncrease;
+        if (_currentHealth > maxHealth) _currentHealth = maxHealth;
 
-        uiManager.UpdateHealthUI(currentHealth);
+        _uiManager.UpdateHealthUI(_currentHealth);
 
         return true;
     }
 
+    // ダメージを受ける
     public void TakeDamage(bool isKick)
     {
-        if (gameover) return;
+        if (_gameover) return;
 
         if (isKick)
         {
-            currentKicks++;
-            currentHealth -= damageToTakePerKick;
-            uiManager.UpdateKickBarUI((float)(kicksToDie - currentKicks) / kicksToDie);
+            _currentKicks++;
+            _currentHealth -= damageToTakePerKick;
+            _uiManager.UpdateKickBarUI((float)(kicksToDie - _currentKicks) / kicksToDie);
         }
-        else currentHealth -= damageToTakeWithTime;
+        else _currentHealth -= damageToTakeWithTime;
 
-        if (currentHealth < 0) currentHealth = 0;
+        if (_currentHealth < 0) _currentHealth = 0;
 
-        uiManager.UpdateHealthUI(currentHealth);
+        _uiManager.UpdateHealthUI(_currentHealth);
 
-        Debug.Log(currentHealth + " | " + currentKicks);
+        // Debug.Log(_currentHealth + " | " + _currentKicks);
     }
 
     public bool AddBoost()
     {
-        if (availableBoosts >= MaxNumberOfBoosts) return false;
+        if (_availableBoosts >= MaxNumberOfBoosts) return false;
 
-        availableBoosts++;
-        uiManager.UpdateBoostUI(availableBoosts);
+        _availableBoosts++;
+        _uiManager.UpdateBoostUI(_availableBoosts);
 
         return true;
     }
 
     public void RemoveBoost()
     {
-        if (availableBoosts <= 0) return;
+        if (_availableBoosts <= 0) return;
 
-        availableBoosts--;
-        uiManager.UpdateBoostUI(availableBoosts);
+        _availableBoosts--;
+        _uiManager.UpdateBoostUI(_availableBoosts);
     }
 
     IEnumerator OnDeathByKick()
     {
-        // waiting for player to get kicked (プレイヤーが蹴られるまで待機)
+        // プレイヤーが蹴られるまで待機
         yield return new WaitForSeconds(3f);
 
-        gameManager.TriggerLose(); // Trigger lose
+        _gameManager.TriggerLose(); // Trigger lose
         OnPlayerDeathSequence();
     }
 
-    // take damage every x seconds (not related to sunset)
     // x秒毎にダメージを受ける
     IEnumerator TakeDamageWithTime()
     {

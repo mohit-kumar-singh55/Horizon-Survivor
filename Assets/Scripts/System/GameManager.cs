@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Singleton Class
+/// <summary>
+/// ゲーム全体を管理するクラス
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    private UIManager uiManager;
-    private AudioManager audioManager;
-    private bool gameEnded = false;
-    private bool menuActive = false;
+    private UIManager _uiManager;
+    private AudioManager _audioManager;
+    private bool _gameEnded = false;
+    private bool _menuActive = false;
 
     void OnEnable()
     {
@@ -35,56 +37,56 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        uiManager = UIManager.Instance;
-        audioManager = AudioManager.Instance;
+        _uiManager = UIManager.Instance;
+        _audioManager = AudioManager.Instance;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !gameEnded) SetShowMenu();
+        if (Input.GetKeyDown(KeyCode.Escape) && !_gameEnded) SetShowMenu();
     }
 
     public void ResumeGame() => SetShowMenu();
 
     public void SetShowMenu()
     {
-        menuActive = !menuActive;
-        uiManager.ShowMenuUI(menuActive);
-        Time.timeScale = menuActive ? 0 : 1;
-        ShowCursor(menuActive);
+        _menuActive = !_menuActive;
+        _uiManager.ShowMenuUI(_menuActive);
+        Time.timeScale = _menuActive ? 0 : 1;
+        ShowCursor(_menuActive);
     }
 
     public void TriggerLose()
     {
-        if (gameEnded) return;
+        if (_gameEnded) return;
 
-        gameEnded = true;
+        _gameEnded = true;
 
         GameOverSequence();
-        uiManager.ShowLoseUI(true);
+        _uiManager.ShowLoseUI(true);
 
         // lose sfx
-        audioManager.PlayLoseSFX();
+        _audioManager.PlayLoseSFX();
     }
 
     public void TriggerWin()
     {
-        if (gameEnded) return;
+        if (_gameEnded) return;
 
-        gameEnded = true;
+        _gameEnded = true;
 
         GameOverSequence();
-        uiManager.ShowWinUI(true);
+        _uiManager.ShowWinUI(true);
 
         // win sfx
-        audioManager.PlayWinSFX();
+        _audioManager.PlayWinSFX();
     }
 
     public void GameOverSequence()
     {
         ShowCursor(true);
-        audioManager.StopBGM();
-        uiManager.ShowGameOverPanelUI(true);
+        _audioManager.StopBGM();
+        _uiManager.ShowGameOverPanelUI(true);
         PlayerController.Instance.enabled = false;
         Time.timeScale = 0.05f;
     }
@@ -97,14 +99,18 @@ public class GameManager : MonoBehaviour
 
     public void ReloadGame()
     {
-        // reload fresh level (remove all singleton script as well if needed)
         // 新しいレベルをリロードします（必要に応じてすべてのシングルトンスクリプトも削除します）
         Instance = null;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
-    // TODO: create go to next level function
-
-    public void QuitGame() => Application.Quit();
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

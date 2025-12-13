@@ -1,9 +1,13 @@
 using UnityEngine;
 
+/// <summary>
+/// 音声を管理するクラス
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
+    #region Serialized Fields
     [Header("BGM")]
     [SerializeField] AudioClip[] bgm;
     [SerializeField] AudioSource bgmAS;
@@ -24,6 +28,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Common Audio Sorce")]
     [SerializeField] AudioSource commonAS;
+    #endregion
 
     private bool forceStopBGM = false;
 
@@ -74,10 +79,10 @@ public class AudioManager : MonoBehaviour
         bgmAS.Stop();
     }
 
-    // ** Player SFX **
+    // ** プレイヤー SFX **
     public void PlayBallBounceSFX() => ballBounceSFX.Play();
 
-    // ** During Kick SFX **
+    // ** キック時の SFX **
     public void PlayPlayerSpottedSFX(EnemyGender enemyGender)
     {
         if (commonAS.isPlaying) return;
@@ -92,7 +97,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayKickExplosionSFX() => commonAS.PlayOneShot(kickExplosionSFX);
 
-    // ** Game Over SFX **
+    // ** ゲームオーバー SFX **
     public void PlayWinSFX() => commonAS.PlayOneShot(winSFX);
     public void PlayLoseSFX() => commonAS.PlayOneShot(loseSFX);
 }

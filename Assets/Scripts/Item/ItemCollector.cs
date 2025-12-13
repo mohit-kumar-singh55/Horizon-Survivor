@@ -3,14 +3,15 @@ using NaughtyAttributes;
 
 public enum ItemType { OXY_CAN, TOOLBOX };
 
+/// <summary>
+/// アイテムを収集し、アイテムの種類に応じた処理を行うクラス
+/// </summary>
 public class ItemCollector : MonoBehaviour
 {
     public ItemType type = ItemType.OXY_CAN;
 
     [ShowIf("type", ItemType.OXY_CAN)]
-    [Range(0, 100)]
-    [SerializeField]
-    private float lifeToIncrease = 40;       // percent
+    [SerializeField, Range(0, 100)] private float lifeToIncrease = 40;       // パーセント
 
     public void Init()
     {

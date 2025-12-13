@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの衝突判定を管理するクラス
+/// </summary>
 public class PlayerColliderController : MonoBehaviour
 {
     [SerializeField] private string itemTag = "Item";
@@ -15,16 +18,15 @@ public class PlayerColliderController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        PlayerController.Instance.PlayHitVFX();     // play hit vfx whenever player hits any collider (プレイヤーが何かにヒットしたら、ヒットVFXを再生します。)
+        PlayerController.Instance.PlayHitVFX();     // プレイヤーが何かにヒットしたら、ヒットVFXを再生します
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag(TAGS.ENEMY))
         {
-            // chasing player if player hits the enemy
             // プレイヤーが敵にヒットした場合、追跡する
-            collision.gameObject.GetComponent<EnemyController>().ChasePlayerAfterHit();
+            if (!collision.gameObject.TryGetComponent(out EnemyController ec)) return;
+            ec.ChasePlayerAfterHit();
         }
 
-        // playing ball bounce sfx whenever player hits any collider
         // プレイヤーが何かにヒットしたら、ボールの反射音を再生します。
         AudioManager.Instance.PlayBallBounceSFX();
     }

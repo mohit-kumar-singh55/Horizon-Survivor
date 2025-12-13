@@ -1,6 +1,9 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
+/// <summary>
+/// カメラの切り替えと衝動の制御するクラス
+/// </summary>
 [RequireComponent(typeof(CinemachineImpulseSource))]
 public class CameraController : MonoBehaviour
 {
@@ -9,7 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineCamera freelookCam;
     [SerializeField] private CinemachineCamera cinematicCam;
 
-    private CinemachineImpulseSource impulseSource;
+    private CinemachineImpulseSource _impulseSource;
 
     void Awake()
     {
@@ -25,7 +28,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        impulseSource = GetComponent<CinemachineImpulseSource>();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     public void ShowCinematicCam(bool show = true)
@@ -34,7 +37,6 @@ public class CameraController : MonoBehaviour
         freelookCam.gameObject.SetActive(!show);
     }
 
-    // Impulse when getting kicked
     // 蹴られたときの衝動
-    public void ScreenShake() => impulseSource.GenerateImpulse(20f);
+    public void ScreenShake() => _impulseSource.GenerateImpulse(20f);
 }

@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// メニュー画面を制御するクラス
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     #region Serialized Fields

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using System.Collections;
 
+/// <summary>
+/// 敵をスポーンするクラス
+/// </summary>
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] Transform waypointParent;
     [SerializeField] Transform enemiesParent;
     [SerializeField] GameObject[] enemies;
-    [SerializeField] int totalEnemies = 100;        // should be multiple of 10 and at least 10 (敵の総数は10の倍数にして、少なくないようにする必要があります)
+    [SerializeField] int totalEnemies = 100;        // 敵の総数は10の倍数にして、少なくないようにする必要があります
 
     private List<Transform> waypoints = new();
-    private int obstacleAvoidancePriority = 1;      // setting priority for obstacle avoidance different for each enemy (敵ごとに障害物回避の優先順位を設定する)
+    private int obstacleAvoidancePriority = 1;      // 敵ごとに障害物回避の優先順位を設定する
 
     void Awake()
     {
@@ -22,19 +25,16 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        // Cache all waypoints once
         // waypointsを一度にキャッシュ
         foreach (Transform child in waypointParent) waypoints.Add(child);
     }
 
     void Start()
     {
-        // overriding total no. of enemies as per difficulty
         // 難易度に応じて敵の総数を上書き
         DifficultySettings settings = DifficultyManager.Instance.CurrentSettings;
         totalEnemies = settings.totalEnemies;
 
-        // spawning NPCs in batches
         // NPCをベッチで生成
         StartCoroutine(SpawnInBatch());
     }
@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
 
             if (enemyController.CurrentEnemyType == EnemyType.Patrollable)
             {
-                // getting few random waypoints
+                // いくつかのランドムなwaypointsを取得
                 List<Transform> shuffled = GetRandomWaypoints(5);
                 spawnPos = shuffled[0].position;
 
@@ -64,12 +64,11 @@ public class EnemySpawner : MonoBehaviour
                 enemy = Instantiate(randomEnemy, spawnPos, Quaternion.identity, enemiesParent);
             }
 
-            // setting obstacle avoidance priority
+            // 障害物回避の優先順位を設定
             enemy.GetComponent<NavMeshAgent>().avoidancePriority = obstacleAvoidancePriority++;
         }
     }
 
-    // get only a few random waypoints to increase performance
     // パフォーマンスを向上させるために、いくつかのランドムなwaypointsを取得
     List<Transform> GetRandomWaypoints(int noOfWaypoints)
     {
@@ -79,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
         {
             var random = waypoints[Random.Range(0, waypoints.Count)];
 
-            // skipping duplicate waypoints (重複するwaypointsをスキップ)
+            // 重複するwaypointsをスキップ
             if (randomWaypoints.Contains(random)) i--;
             else randomWaypoints.Add(random);
         }
@@ -89,14 +88,7 @@ public class EnemySpawner : MonoBehaviour
 
     GameObject GetRandomEnemy() => enemies[Random.Range(0, enemies.Length)];
 
-    /*
-    * spawning enemies in batches
-    * wait for some seconds after each batch
-    * for better performance
-    * 敵をベッチで生成する
-    * 各ベッチの間に少し待つ
-    * パフォーマンスを向上させる
-    */
+    // 敵をベッチで生成する、各ベッチの間に少し待つ、パフォーマンスを向上させる
     IEnumerator SpawnInBatch()
     {
         int no_of_batches = 10;

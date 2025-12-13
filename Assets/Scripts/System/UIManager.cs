@@ -3,10 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 複数の UI 要素とその状態を管理し、テキスト更新・表示／非表示切り替え・勝敗状態の制御を行うクラス
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    #region Serialize Fields
     [Header("In Game UI")]
     [SerializeField] private HorizontalProgressBar healthBar;
     [Tooltip("Reduces with no. of kicks")]
@@ -20,6 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject loseUI;
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameObject menuUI;
+    #endregion
 
     private void Awake()
     {
